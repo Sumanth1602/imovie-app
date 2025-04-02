@@ -1,0 +1,74 @@
+<div class="container-fluid my-4">
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title mb-0">
+            <i class="fas fa-film me-2"></i>
+            {{theatreArray[0].shows[0].movieName}}
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row g-4">
+    <div class="col-12" *ngFor="let theatre of theatreArray">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <h5 class="card-title">
+                <i class="fas fa-theater-masks me-2 text-danger"></i>
+                {{theatre.theatreName}}
+              </h5>
+              <p class="card-text">
+                <i class="fas fa-map-marker-alt me-2 text-secondary"></i>
+                {{theatre.theatreLocation}}
+              </p>
+            </div>
+            
+            <div class="col-md-8">
+              <h6 class="mb-3">
+                <i class="far fa-clock me-2 text-danger"></i>
+                Show Timings:
+              </h6>
+              <div class="d-flex flex-wrap">
+                <button *ngFor="let show of theatre.shows" 
+                        class="btn btn-outline-success me-2 mb-2"
+                        [title]="'Movie: ' + show.movieName"
+                        (click)="openTicketPopup(show.showId)">
+                  <i class="fas fa-ticket-alt me-1"></i>
+                  {{show.timings | date:'shortTime'}}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Ticket Booking Popup -->
+<div class="modal" tabindex="-1" [ngClass]="{'d-block': showPopup, 'show': showPopup}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Book Tickets</h5>
+        <button type="button" class="btn-close" (click)="closePopup()"></button>
+      </div>
+      <div class="modal-body">
+        <p>Available seats: {{availableSeats.length}}</p>
+        <div class="form-group">
+          <label for="ticketCount">Number of tickets:</label>
+          <input type="number" id="ticketCount" class="form-control" [(ngModel)]="ticketCount" min="1" [max]="availableSeats.length">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" (click)="bookTickets()">Book Tickets</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="showPopup"></div>

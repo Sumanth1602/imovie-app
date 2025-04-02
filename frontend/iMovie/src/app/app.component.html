@@ -1,0 +1,28 @@
+<nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" [routerLink]="['home']"><span class="text-danger">i</span>Movie</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      </ul>
+      <form class="d-flex" role="search" (ngSubmit)="searchMovies(movieSearch.value)">
+        <div class="input-group">
+          <input class="form-control" type="search" placeholder="Search Movies" aria-label="Search" #movieSearch>
+          <button class="btn btn-outline-danger" type="submit">Search</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <router-outlet></router-outlet>
+</div>
+<footer class="bg-dark text-white text-center  mt-3 py-2" style="position: fixed; bottom: 0px; width: 100%;">
+  <div class="container">
+    <p>&copy; 2024 INFOSYS created by Aman(1356488) and Sumanth(1356491)</p>
+  </div>
+</footer>

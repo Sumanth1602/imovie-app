@@ -1,0 +1,50 @@
+<div class="container my-5">
+  <h2 class="text-center mb-4">Movie Description</h2>
+  <div class="card shadow">
+    <div class="row g-0">
+      <div class="col-md-3">
+        <img [src]="movie.imgUrl" [alt]="movie.movieName" class="img-fluid rounded-start h-100 object-fit-cover">
+      </div>
+      <div class="col-md-9">
+        <div class="card-body">
+          <h2 class="card-title mb-3">{{movie.movieName}}</h2>
+          <div class="row">
+            <div class="col-md-8">
+              <p class="card-text"><i class="fas fa-film me-2 text-danger"></i><strong>Description:</strong> {{movie.description}}</p>
+              <p class="card-text"><i class="far fa-calendar-alt me-2 text-danger"></i><strong>Release Date:</strong> {{movie.releaseDate | date:'mediumDate'}}</p>
+              <p class="card-text"><i class="fas fa-star me-2 text-danger"></i><strong>Rating:</strong> {{movie.rating | number:'1.1-1'}} / 5</p>
+              <p class="card-text"><i class="fas fa-check-circle me-2 text-danger"></i><strong>Censor Rating:</strong> {{movie.censorRating}}</p>
+              <div *ngIf="watched">
+                <div class="mt-4">
+                  <p class="mb-2"><strong>Rate this movie:</strong></p>
+                  <div class="star-rating">
+                    <i class="fas fa-star" (click)="rateMovie(5)" [class.active]="userRating >= 5"></i>
+                    <i class="fas fa-star" (click)="rateMovie(4)" [class.active]="userRating >= 4"></i>
+                    <i class="fas fa-star" (click)="rateMovie(3)" [class.active]="userRating >= 3"></i>
+                    <i class="fas fa-star" (click)="rateMovie(2)" [class.active]="userRating >= 2"></i>
+                    <i class="fas fa-star" (click)="rateMovie(1)" [class.active]="userRating >= 1"></i>
+                  </div>
+                  <span class="ms-2" *ngIf="userRating > 0">Your rating: {{userRating}} / 5</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-4">
+              <p class="card-text"><i class="fas fa-theater-masks me-2 text-danger"></i><strong>Genre:</strong></p>
+              <ul class="list-unstyled">
+                <li *ngFor="let g of movie.genre"><i class="fas fa-chevron-right me-2 text-muted"></i>{{g}}</li>
+              </ul>
+              <p class="card-text mt-3"><i class="fas fa-language me-2 text-danger"></i><strong>Languages:</strong></p>
+              <ul class="list-unstyled">
+                <li *ngFor="let l of movie.languages"><i class="fas fa-chevron-right me-2 text-muted"></i>{{l}}</li>
+              </ul>
+            </div>
+          </div>
+          <button class="btn btn-danger float-end mb-2" (click)="showTheatres(movie.movieName)">
+            <i class="fa-solid fa-ticket me-2"></i>Book My Show
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

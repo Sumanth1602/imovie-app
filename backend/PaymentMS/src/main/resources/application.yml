@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: PaymentMS
+  cloud:
+    consul:
+      discovery:
+        hostname: localhost
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost/payment_db
+    username: root
+    password: root
+  jpa:
+    hibernate.ddl-auto: update
+
+server:
+  port: 9124

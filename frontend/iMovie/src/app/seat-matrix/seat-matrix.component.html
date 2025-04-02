@@ -1,0 +1,78 @@
+<div class="container my-5">
+    <h2 class="text-center mb-4">Seat Selection</h2>
+    <div class="alert alert-info mb-3">
+      Please select {{ maxTickets }} seat(s).
+    </div>
+    <div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
+    <div class="row">
+      <div class="col-md-9">
+        <div class="seat-matrix">
+          <div class="screen mb-4">
+            <div class="bg-secondary text-white text-center py-1">Screen</div>
+          </div>
+          <table class="table-borderless mx-auto">
+            <tbody>
+              <tr *ngFor="let row of seats; let r = index">
+                <td *ngFor="let seat of row; let c = index" class="p-1">
+                  <div *ngIf="seat" class="seat-container">
+                    <button 
+                      (click)="toggleSeat(seat)" 
+                      [disabled]="seat.status === 'BOOKED' || (selectedSeats.length >= maxTickets && !seat.selected)"
+                      [ngClass]="[
+                        'seat-btn',
+                        seat.status === 'BOOKED' ? 'seat-booked' :
+                        seat.selected ? 'seat-selected' :
+                        selectedSeats.length >= maxTickets ? 'seat-disabled' : 'seat-available'
+                      ]"
+                    >
+                      <i [ngClass]="{
+                        'fas': true,
+                        'fa-chair': seat.type === 'Normal',
+                        'fa-couch': seat.type === 'Recliner'
+                      }"></i>
+                      {{seat.seatNum}}
+                    </button>
+                    <div class="seat-tooltip">
+                      <strong>Seat {{seat.seatNum}}</strong><br>
+                      Type: {{seat.type}}<br>
+                      Price: {{seat.price | currency:'INR'}}
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Selected Seats ({{selectedSeats.length}}/{{maxTickets}})</h5>
+            <ul class="list-group list-group-flush">
+              <li *ngFor="let seat of selectedSeats" class="list-group-item">
+                Seat {{seat.seatNum}} - {{seat.price | currency:'INR'}}
+              </li>
+            </ul>
+            <p class="mt-3"><strong>Total: {{totalAmount | currency:'INR'}}</strong></p>
+            <button (click)="submitBooking()" class="btn btn-success w-100" [disabled]="selectedSeats.length !== maxTickets">
+              Book Seats
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="seat-legend">
+      <span class="legend-item">
+        <i class="fas fa-square text-success"></i> Available
+      </span>
+      <span class="legend-item">
+        <i class="fas fa-square text-danger"></i> Booked
+      </span>
+      <span class="legend-item">
+        <i class="fas fa-square text-warning"></i> Selected
+      </span>
+      <span class="legend-item">
+        <i class="fas fa-square text-secondary"></i> Disabled
+      </span>
+    </div>
+  </div>

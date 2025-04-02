@@ -1,0 +1,138 @@
+<div class="container mt-5">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="text-center mb-4">
+          <i class="fas fa-ticket-alt me-2"></i>Booking Details & Payment
+        </h2>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Booking Summary Column -->
+      <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+          <div class="card-header bg-dark text-white">
+            <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Booking Summary</h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <tbody>
+                  <tr>
+                    <th scope="row" class="table-light">Show ID</th>
+                    <td>{{showId}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="table-light">Selected Seats</th>
+                    <td>{{selectedSeats.join(', ')}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="table-light">Ticket Price</th>
+                    <td>{{seatTotalPrice | currency:'INR':'symbol':'1.2-2'}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="table-light">Convenience Fee</th>
+                    <td>{{convenienceFee | currency:'INR':'symbol':'1.2-2'}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row" class="table-light">GST (18%)</th>
+                    <td>{{gstAmount | currency:'INR':'symbol':'1.2-2'}}</td>
+                  </tr>
+                  <tr class="table-primary">
+                    <th scope="row">Total Amount</th>
+                    <td><strong>{{totalAmount | currency:'INR':'symbol':'1.2-2'}}</strong></td>
+                  </tr>
+                  <tr class="table-success">
+                    <th scope="row">Discounted Price</th>
+                    <td><strong>{{discount | currency:'INR':'symbol':'1.2-2'}}</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Payment Form Column -->
+      <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+          <div class="card-header bg-dark text-white">
+            <h5 class="mb-0"><i class="fas fa-credit-card me-2"></i>Payment Details</h5>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+              <div class="mb-3">
+                <label class="form-label">Card Type</label>
+                <div class="btn-group w-100" role="group" aria-label="Card Type">
+                  <input type="radio" class="btn-check" id="creditCard" value="Credit" formControlName="cardType" autocomplete="off">
+                  <label class="btn btn-outline-danger" for="creditCard">
+                    <i class="far fa-credit-card me-2"></i>Credit - 10% Discount
+                  </label>
+                  <input type="radio" class="btn-check" id="debitCard" value="Debit" formControlName="cardType" autocomplete="off">
+                  <label class="btn btn-outline-danger" for="debitCard">
+                    <i class="fas fa-money-check me-2"></i>Debit Card - 5% Discount
+                  </label>
+                </div>
+              </div>
+            
+              <div class="mb-3">
+                <label for="cardNum" class="form-label">
+                  <i class="fas fa-credit-card me-2"></i>Card Number
+                </label>
+                <input type="number" class="form-control" id="cardNum" formControlName="cardNum" placeholder="1234 5678 9012 3456" [attr.disabled]="!paymentForm.get('cardType')?.value ? '' : null">
+                <div *ngIf="paymentForm.get('cardNum')?.invalid && paymentForm.get('cardNum')?.touched" class="text-danger">
+                  <i class="fas fa-exclamation-triangle me-2"></i>Please enter a valid 16-digit card number.
+                </div>
+              </div>
+  
+              <div class="mb-3">
+                <label for="name" class="form-label">
+                  <i class="fas fa-user-pen me-2"></i>Name on Card
+                </label>
+                <input type="text" class="form-control" id="name" formControlName="name" placeholder="Enter name on card" [attr.disabled]="!paymentForm.get('cardType')?.value ? '' : null">
+                <div *ngIf="paymentForm.get('name')?.invalid && paymentForm.get('name')?.touched" class="text-danger">
+                  <i class="fas fa-exclamation-triangle me-2"></i>Please enter a valid Name.
+                </div>
+              </div>
+            
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="expiry" class="form-label">
+                    <i class="far fa-calendar-alt me-2"></i>Expiration Date
+                  </label>
+                  <input type="text" class="form-control" id="expiry" formControlName="expiry" placeholder="MM/YY" [attr.disabled]="!paymentForm.get('cardType')?.value ? '' : null">
+                  <div *ngIf="paymentForm.get('expiry')?.invalid && paymentForm.get('expiry')?.touched" class="text-danger">
+                    <i class="fas fa-exclamation-triangle me-2"></i>Please enter a valid future date in MM/YY format.
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="cvv" class="form-label">
+                    <i class="fas fa-lock me-2"></i>CVV
+                  </label>
+                  <input type="number" class="form-control" id="cvv" formControlName="cvv" placeholder="123" [attr.disabled]="!paymentForm.get('cardType')?.value ? '' : null">
+                  <div *ngIf="paymentForm.get('cvv')?.invalid && paymentForm.get('cvv')?.touched" class="text-danger">
+                    <i class="fas fa-exclamation-triangle me-2"></i>Please enter a valid 3-digit CVV.
+                  </div>
+                </div>
+              </div>
+            
+              <div class="d-grid">
+                <button type="submit" class="btn btn-danger btn-lg" [disabled]="!paymentForm.valid">
+                  <i class="fas fa-lock me-2"></i>Pay {{discount | currency:'INR':'symbol':'1.2-2'}}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Submission Message Row -->
+    <div class="row mt-1">
+      <div class="col-12">
+        <div *ngIf="submissionMessage" class="alert" [ngClass]="{'alert-success': submissionMessage.includes('successfully'), 'alert-danger': submissionMessage.includes('invalid')}">
+          <i class="fas" [ngClass]="{'fa-check-circle': submissionMessage.includes('successfully'), 'fa-exclamation-circle': submissionMessage.includes('invalid')}"></i>
+          {{submissionMessage}}
+        </div>
+      </div>
+    </div>
+  </div>

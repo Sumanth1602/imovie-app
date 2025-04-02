@@ -1,0 +1,40 @@
+.col-md-2-4 {
+    width: 20%;
+    padding: 0 10px;
+  }
+  
+.card {
+margin-bottom: 20px;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+width: 0.2%;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+
+padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .col-md-2-4 {
+        width: 50%;
+}
+}
+
+@media (max-width: 576px) {
+.col-md-2-4 {
+    width: 100%;
+}
+}
+
+.hover-scale {
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+}
+  
+.hover-scale:hover {
+transform: scale(1.024);
+}

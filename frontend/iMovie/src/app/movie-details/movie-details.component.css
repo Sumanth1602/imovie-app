@@ -1,0 +1,28 @@
+.star-rating {
+    font-size: 1.2rem;
+    color: #ccc;
+    display: inline-flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.star-rating .fas {
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 0 2px;
+}
+
+.star-rating .fas:hover,
+.star-rating .fas:hover~.fas,
+.star-rating .fas.active {
+    color: #ffc107;
+}
+
+.star-rating:hover .fas.active {
+    color: #ccc;
+}
+
+.star-rating:hover .fas:hover,
+.star-rating:hover .fas:hover~.fas {
+    color: #ffc107;
+}

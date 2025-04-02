@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: MovieMS
+  cloud:
+    consul:
+      discovery:
+        hostname: localhost
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost/movie_db
+    username: root
+    password: root
+  jpa:
+    hibernate.ddl-auto: update
+
+server:
+  port: 8700
+
+Service:
+  NO_MOVIES_FOUND: Unable to fetch Movies
+  INVALID_MOVIE_ID: Incorrect Movie ID

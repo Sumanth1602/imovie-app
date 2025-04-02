@@ -1,0 +1,50 @@
+<h2 class="text-center mb-4" *ngIf="movieChunks.length">
+    <i class="fas fa-film me-2"></i>Welcome to iMovie
+</h2>
+  
+<div id="movieCarousel" class="carousel slide" *ngIf="movieChunks.length">
+<div class="carousel-inner">
+    <div class="carousel-item" *ngFor="let chunk of movieChunks; let i = index" [class.active]="i === 0">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-5 g-4">
+        <div class="col" *ngFor="let movie of chunk">
+            <div class="card h-100 shadow-sm hover-scale" (click)="goTo(movie.movieName)">
+            <img src="{{movie.imgUrl}}" [alt]="movie.movieId" class="card-img-top" style="height: 220px; object-fit: cover;">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title text-truncate">{{ movie.movieName }}</h5>
+                <p class="card-text flex-grow-1">{{ movie.description | slice:0:80 }}...</p>
+                <div class="mt-auto">
+                <p class="mb-2">
+                    <i class="fas fa-star text-warning me-1"></i>
+                    <span class="fw-bold">{{ movie.rating | number:'1.1-1' }}</span>/5
+                </p>
+                <p class="mb-0 text-muted">
+                    <i class="far fa-calendar-alt me-1"></i>
+                    {{ movie.releaseDate | date:'dd-MMM-yyyy' }}
+                </p>
+                </div>
+            </div>
+            <div class="card-footer bg-transparent">
+                <small class="text-muted">{{ movie.genre.join(', ') }}</small>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+<button class="carousel-control-prev" type="button" data-bs-target="#movieCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+</button>
+<button class="carousel-control-next" type="button" data-bs-target="#movieCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+</button>
+</div>
+
+<div class="container mt-4" *ngIf="!movieChunks.length">
+<div class="alert alert-warning text-center" role="alert">
+    <i class="fas fa-exclamation-triangle me-2"></i>{{ errorMessage }}
+</div>
+</div>

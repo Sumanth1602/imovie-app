@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: GatewayMS
+  cloud:
+    consul:
+      host: localhost
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: MovieMS
+          uri: lb://MovieMS
+          predicates:
+            - Path=/imovie/movie-list/**
+        - id: TheatreMS
+          uri: lb://TheatreMS
+          predicates:
+            - Path=/imovie/theatre-list/**
+        - id: SeatMS
+          uri: lb://SeatMS
+          predicates:
+            - Path=/imovie/seat-list/**
+        - id: BookingMS
+          uri: lb://BookingMS
+          predicates:
+            - Path=/imovie/booking/**
+        - id: PaymentMS
+          uri: lb://PaymentMS
+          predicates:
+            - Path=/imovie/payment/**
+
+server:
+  port: 8888
